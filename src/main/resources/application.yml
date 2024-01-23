@@ -27,3 +27,17 @@ spring:
 
   mustache:
     cache: false
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 710069039220-emjka19bo0k2b5ck2ol5e7gga0tl2gc3.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+
+  profiles:
+    include: oauth
