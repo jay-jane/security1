@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 //시큐리티 설정에서 loginProcessingUrl("/login")을 설정함
 // /login 요청이 오면 자동으로 UserDetailsService 타입으로 IoC 되어있는 loadUserByUsername 메서드가 실행됨
+//해당 메서드 종료 시 @AuthenticationPrincipal 어노테이션이 생성됨
 @Service
 public class PrincipalDetailsService implements UserDetailsService {
 
@@ -22,7 +23,7 @@ public class PrincipalDetailsService implements UserDetailsService {
         User userEntity = userRepository.findByUsername(username);
 
         if (userEntity != null) {
-            return new PrincipalDetails(userEntity);
+            return new PrincipalDetails(userEntity); //PrincipalDetails 객체를 리턴 받기 위해 오버라이드 한 것
         }
         return null;
     }

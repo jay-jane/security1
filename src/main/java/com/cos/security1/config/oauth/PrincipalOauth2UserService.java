@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+//해당 메서드 종료 시 @AuthenticationPrincipal 어노테이션이 생성됨
 @Service
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
@@ -41,6 +42,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         User userEntity = userRepository.findByUsername(username);
 
         if (userEntity == null) {
+            System.out.println("구글 로그인이 최초입니다");
             userEntity = User.builder()
                     .username(username)
                     .password(password)
@@ -50,8 +52,10 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
                     .providerId(providerId)
                     .build();
             userRepository.save(userEntity);
+        } else {
+            System.out.println("구글 로그인을 이미 한 적이 있습니다");
         }
 
-        return new PrincipalDetails(userEntity, oAuth2User.getAttributes());
+        return new PrincipalDetails(userEntity, oAuth2User.getAttributes()); //PrincipalDetails 객체를 리턴 받기 위해 오버라이드 한 것
     }
 }
